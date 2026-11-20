@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans text-ink antialiased;
+    margin: 0;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+  body,
+  .theme-bg {
+    background: linear-gradient(150deg, rgb(var(--bg-from)), rgb(var(--bg-via)) 55%, rgb(var(--bg-to))) fixed;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-serif font-semibold tracking-tight;
+  }
+  ::selection {
+    background: rgb(var(--accent) / 0.3);
+  }
+}
+
+@layer components {
+  /* Soft glassmorphism surface */
+  .glass {
+    background: rgb(var(--surface) / var(--surface-alpha));
+    border: 1px solid rgb(var(--line) / var(--line-alpha));
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    backdrop-filter: blur(20px) saturate(140%);
+    box-shadow:
+      0 14px 40px -16px rgb(var(--shadow) / 0.35),
+      inset 0 1px 0 rgb(255 255 255 / 0.22);
+  }
+  /* Opaque variant for dialogs and toasts (readability first) */
+  .glass-solid {
+    background: rgb(var(--bg-via));
+    border: 1px solid rgb(var(--line) / calc(var(--line-alpha) + 0.1));
+    box-shadow: 0 24px 60px -20px rgb(var(--shadow) / 0.5);
+  }
+  .input-base {
+    @apply w-full rounded-2xl px-4 py-3 text-ink outline-none transition placeholder:text-soft/60 disabled:opacity-50;
+    background: rgb(var(--surface) / var(--field-alpha));
+    border: 1px solid rgb(var(--line) / calc(var(--line-alpha) + 0.12));
+  }
+  .input-base:focus {
+    border-color: rgb(var(--accent));
+    box-shadow: 0 0 0 4px rgb(var(--accent) / 0.2);
+  }
+  .input-error {
+    border-color: rgb(239 68 68);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
